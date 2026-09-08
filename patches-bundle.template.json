@@ -1,0 +1,8 @@
+{
+  "name": "Multi-App Patches",
+  "description": "Multi-App Patches compatibility port for Morphe patcher 1.12.1-dev.1",
+  "version": "__VERSION__",
+  "created_at": "__CREATED_AT__",
+  "download_url": "https://github.com/__REPO__/releases/download/v__VERSION__/patches-__VERSION__.mpp",
+  "signature_download_url": ""
+}

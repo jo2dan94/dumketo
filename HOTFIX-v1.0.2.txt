@@ -1,0 +1,27 @@
+MULTI-APP PATCHES GITHUB REMOTE v1.0.2
+======================================
+
+v1.0.1 fixed the PowerShell `$Args` collision.
+
+v1.0.2 fixes a second PowerShell edge case that appears after the first
+successful commit:
+
+  $ExistingTag = (& git -C $Root tag --list $Tag).Trim()
+
+When no tag exists, Git writes no output. PowerShell represents that as `$null`,
+so `.Trim()` throws:
+
+  You cannot call a method on a null-valued expression.
+
+The publisher now uses a null-safe `Get-GitText` helper for every Git query that
+may legitimately return no text.
+
+Your existing `.git` directory and commit do not need to be deleted.
+
+Safe retry:
+  .\VERIFY-PUBLISHER-HOTFIX.ps1
+
+Then rerun the exact same:
+  .\ONECLICK-PUBLISH.ps1 -Repo "OWNER/REPO" -CreateRepo
+
+If the repo already exists, that is fine.

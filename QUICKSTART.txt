@@ -1,0 +1,71 @@
+MULTI-APP PATCHES — GITHUB REMOTE SOURCE
+========================================
+
+Recommended GitHub repo name:
+  multi-app-patches-modern
+
+OPTION A — CREATE THE REPO AND PUBLISH IN ONE COMMAND
+-----------------------------------------------------
+
+1. Install/authenticate GitHub CLI once:
+   gh auth login
+
+2. Extract this package.
+
+3. Run:
+
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+
+   cd "$env:USERPROFILE\Downloads\Multi-App-Patches-GitHub-Remote-v1.0"
+
+   .\ONECLICK-PUBLISH.ps1 `
+     -Repo "YOUR_GITHUB_USERNAME/multi-app-patches-modern" `
+     -CreateRepo
+
+The publisher will:
+- create the GitHub repo if needed;
+- configure the root patches-bundle.json;
+- configure the .mpp Source/Website manifest values;
+- build the port against patcher 1.12.1-dev.1;
+- verify classes.dex;
+- verify Patcher-Version: 1.12.1-dev.1;
+- commit and push main;
+- create tag v1.0.0-port1;
+- create the GitHub Release;
+- upload patches-1.0.0-port1.mpp.
+
+OPTION B — USE AN EXISTING FORK/REPOSITORY
+------------------------------------------
+
+If you already forked dumketo/multi-app-patches (or have another existing repo),
+use the clone-and-overlay helper so Git history stays valid:
+
+   .\PUBLISH-TO-EXISTING-REPO.ps1 `
+     -Repo "YOUR_GITHUB_USERNAME/YOUR_EXISTING_REPO"
+
+MORPHE
+------
+
+After publishing:
+
+1. Delete:
+   https://github.com/dumketo/multi-app-patches
+
+2. You can also delete the temporary Local port if desired.
+
+3. Add your new remote source:
+   https://github.com/YOUR_GITHUB_USERNAME/multi-app-patches-modern
+
+Expected source card:
+   Multi-App Patches
+   1.0.0-port1
+   Remote
+
+It should NOT show:
+   Update Morphe
+   patcher 2.0.1
+
+SECURITY
+--------
+The publisher uses your existing `gh auth` login.
+It does not ask you to paste a raw GitHub token into this project or PowerShell environment variables.

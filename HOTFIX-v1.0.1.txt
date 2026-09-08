@@ -1,0 +1,48 @@
+MULTI-APP PATCHES GITHUB REMOTE v1.0.1
+======================================
+
+HOTFIX
+------
+v1.0 had a PowerShell bug in PUBLISH-GITHUB-RELEASE.ps1:
+
+  function Run([string]$Exe, [string[]]$Args)
+
+$Args is a PowerShell automatic variable. It was overwritten/empty inside the
+function, causing calls such as:
+
+  Run "git" @("-C", $Root, "init")
+
+to execute plain:
+
+  git
+
+with no arguments.
+
+v1.0.1 renames the parameter to $CommandArgs and also removes other uses of
+$Args as a custom variable.
+
+RETRY IMPROVEMENT
+-----------------
+If the failed v1.0 run already created your GitHub repository but failed before
+the first git commit/push, v1.0.1 checks the remote with:
+
+  git ls-remote --heads
+
+If the repository is empty, it safely resumes from the extracted package.
+
+If the repository already contains commits, v1.0.1 still refuses to overwrite
+history and directs you to PUBLISH-TO-EXISTING-REPO.ps1.
+
+RUN
+---
+Set-ExecutionPolicy -Scope Process Bypass -Force
+
+.\VERIFY-PUBLISHER-HOTFIX.ps1
+
+Then rerun your same publish command, for example:
+
+.\ONECLICK-PUBLISH.ps1 `
+  -Repo "YOUR_GITHUB_USERNAME/multi-app-patches-modern" `
+  -CreateRepo
+
+It is safe if the repo was already created by the failed first attempt.

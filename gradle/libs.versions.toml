@@ -1,0 +1,12 @@
+[versions]
+# Exact patcher version bundled by the current Morphe Manager dev source.
+morphe-patcher = "1.12.1-dev.1"
+
+# Current value used by the official Morphe patches template/plugin.
+#noinspection GradleDependency
+smali = "d92701d947"
+
+gson = "2.14.0"
+
+[libraries]
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
